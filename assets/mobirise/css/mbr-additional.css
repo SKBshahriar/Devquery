@@ -1,0 +1,26 @@
+@import url(https://fonts.googleapis.com/css?family=Lora:400,700);
+@import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400,300,700);
+
+
+#menu-0 .mbr-brand__name {
+  font-size: 16px;
+  color: white;
+}
+#menu-0.mbr-navbar--stuck .mbr-navbar__section {
+  background: #72bb53;
+}
+#header1-1 H1 {
+  text-align: center;
+  font-family: 'Lora', serif;
+  font-size: 100px;
+  color: black;
+}
+#header1-1 P {
+  text-align: right;
+  font-family: 'Yanone Kaffeesatz', sans-serif;
+  font-size: 48px;
+  color: white;
+}
+#header1-1 .btn {
+  font-size: 18px;
+}
