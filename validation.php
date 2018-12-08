@@ -111,6 +111,45 @@ if($action == "plusvote"){
         $data[1] = $plusvote_count;
         $data = json_encode($data);
 
+
+
+
+        $sql = "select * from my_post where post_id='$post_id'";
+        $result = $db->query($sql);
+        $res = $result->fetch_assoc();
+        if($res){
+            $notf = "".$user_name." gave plus vote to your post";
+            $post_owner = $res['user_name'];
+            if($user_name!= $post_owner){
+                $sql = "insert into notification(user_name,notification_details,post_id,is_read) values('$post_owner','$notf','$post_id','0')";
+                $db->query($sql);
+            }
+        }
+        else{
+            $sql = "select * from community_post where post_id='$post_id'";
+            $result = $db->query($sql);
+            $res = $result->fetch_assoc();
+
+            $community_id = $res['community_id'];
+            $s = "select * from community where community_id='$community_id'";
+            $r = $db->query($s);
+            $rs = $r->fetch_assoc();
+            $community_title= $rs['community_title'];
+
+            if($res){
+                $notf = "".$user_name." gave plus vote to your post in ".$community_title;
+                $post_owner = $res['user_name'];
+                if($user_name!= $post_owner){
+                    $sql = "insert into notification(user_name,notification_details,post_id,is_read) values('$post_owner','$notf','$post_id','0')";
+                    $db->query($sql);
+                }
+            }
+        }
+
+
+
+
+
         echo $data;
     }
     else if($plusvote_count == 1 && $minusvote_count == 0){
@@ -151,8 +190,54 @@ if($action == "plusvote"){
         $data[1] = $plusvote_count;
         $data[2] = $minusvote_count;
         $data = json_encode($data);
+
+
+
+
+        $sql = "select * from my_post where post_id='$post_id'";
+        $result = $db->query($sql);
+        $res = $result->fetch_assoc();
+        if($res){
+            $notf = "".$user_name." gave plus vote to your post";
+            $post_owner = $res['user_name'];
+            if($user_name!= $post_owner){
+                $sql = "insert into notification(user_name,notification_details,post_id,is_read) values('$post_owner','$notf','$post_id','0')";
+                $db->query($sql);
+            }
+        }
+        else{
+            $sql = "select * from community_post where post_id='$post_id'";
+            $result = $db->query($sql);
+            $res = $result->fetch_assoc();
+
+            $community_id = $res['community_id'];
+            $s = "select * from community where community_id='$community_id'";
+            $r = $db->query($s);
+            $rs = $r->fetch_assoc();
+            $community_title= $rs['community_title'];
+
+            if($res){
+                $notf = "".$user_name." gave plus vote to your post in ".$community_title;
+                $post_owner = $res['user_name'];
+                if($user_name!= $post_owner){
+                    $sql = "insert into notification(user_name,notification_details,post_id,is_read) values('$post_owner','$notf','$post_id','0')";
+                    $db->query($sql);
+                }
+            }
+        }
+
+
+
+
+
+
+
+
         echo $data;
     }
+
+
+
 }
 
 
@@ -186,6 +271,49 @@ if($action == "minusvote"){
         $data[0] = 1;
         $data[1] = $minusvote_count;
         $data = json_encode($data);
+
+
+
+
+
+        $sql = "select * from my_post where post_id='$post_id'";
+        $result = $db->query($sql);
+        $res = $result->fetch_assoc();
+        if($res){
+            $notf = "".$user_name." gave minus vote to your post";
+            $post_owner = $res['user_name'];
+            if($user_name!= $post_owner){
+                $sql = "insert into notification(user_name,notification_details,post_id,is_read) values('$post_owner','$notf','$post_id','0')";
+                $db->query($sql);
+            }
+        }
+        else{
+            $sql = "select * from community_post where post_id='$post_id'";
+            $result = $db->query($sql);
+            $res = $result->fetch_assoc();
+
+            $community_id = $res['community_id'];
+            $s = "select * from community where community_id='$community_id'";
+            $r = $db->query($s);
+            $rs = $r->fetch_assoc();
+            $community_title= $rs['community_title'];
+
+            if($res){
+                $notf = "".$user_name." gave minus vote to your post in ".$community_title;
+                $post_owner = $res['user_name'];
+                if($user_name!= $post_owner){
+                    $sql = "insert into notification(user_name,notification_details,post_id,is_read) values('$post_owner','$notf','$post_id','0')";
+                    $db->query($sql);
+                }
+            }
+        }
+
+
+
+
+
+
+
 
         echo $data;
     }
@@ -228,8 +356,51 @@ if($action == "minusvote"){
         $data[1] = $minusvote_count;
         $data[2] = $plusvote_count;
         $data = json_encode($data);
+
+
+
+
+
+        $sql = "select * from my_post where post_id='$post_id'";
+        $result = $db->query($sql);
+        $res = $result->fetch_assoc();
+        if($res){
+            $notf = "".$user_name." gave minus vote to your post";
+            $post_owner = $res['user_name'];
+            if($user_name!= $post_owner){
+                $sql = "insert into notification(user_name,notification_details,post_id,is_read) values('$post_owner','$notf','$post_id','0')";
+                $db->query($sql);
+            }
+        }
+        else{
+            $sql = "select * from community_post where post_id='$post_id'";
+            $result = $db->query($sql);
+            $res = $result->fetch_assoc();
+
+            $community_id = $res['community_id'];
+            $s = "select * from community where community_id='$community_id'";
+            $r = $db->query($s);
+            $rs = $r->fetch_assoc();
+            $community_title= $rs['community_title'];
+
+            if($res){
+                $notf = "".$user_name." gave minus vote to your post in ".$community_title;
+                $post_owner = $res['user_name'];
+                if($user_name!= $post_owner){
+                    $sql = "insert into notification(user_name,notification_details,post_id,is_read) values('$post_owner','$notf','$post_id','0')";
+                    $db->query($sql);
+                }
+            }
+        }
+
+
+
+
+
         echo $data;
     }
+
+
 }
 
 
@@ -253,7 +424,12 @@ if($action == "follow"){
     }
 }
 
-
+if($action == "notf"){
+    session_start();
+    $notfid = $_POST['notfid'];
+    $sql = "UPDATE notification SET is_read='1' WHERE notification_id='$notfid'";
+    $db->query($sql);
+}
 
 ?>
 

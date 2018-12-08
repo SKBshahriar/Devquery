@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="assets/mobirise/css/mbr-additional.css" type="text/css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
@@ -32,6 +32,69 @@
         #nav-a:hover
         {
             color: darkred;
+        }
+
+        .nf{
+            display:none;
+        }
+        .notify {
+            list-style: none;
+            width: 100%;
+            padding-left: 0;
+            overflow: auto;
+            height: 404px;
+        }
+
+        ul.notify li {
+            position: relative;
+        }
+
+        ul.notify li a {
+            text-decoration: none;
+            color: darkblue;
+            display: block;
+            padding: 14px 13px;
+            width: 100%;
+            background: darkgray;
+            border-bottom: 1px solid;
+        }
+        ul.notify li a:hover {
+            background: whitesmoke;
+        }
+
+        .nf::before {
+            content: '';
+            border-bottom: 11px solid #4CAF50;
+            border-right: 11px solid transparent;
+            border-left: 9px solid transparent;
+            position: absolute;
+            left: 23px;
+            bottom: -8px;
+        }
+
+        .nn {
+            width: 550px;
+            position: absolute;
+            left: -414px;
+            top: 50px;
+            height: 493px;
+        }
+
+        button.btn1 {
+            color: white;
+            padding: 11px 25px;
+            border: none;
+            outline:none;
+            margin: 0 auto;
+            background-color: #4CAF50;
+            display: block;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button.btn1:hover {
+            opacity: 1;
+            background-color: #4CAF50;
         }
 
     </style>
@@ -90,27 +153,59 @@ function check_vote($post_id,$vote_direction,$user_name,$db){
 
 
 
-<body>
+<body onclick="ok()">
 <nav class="navbar" style="z-index: 9999">
     <div class="container" id="mainnav">
-
         <img src="img/logo.png" style="height: 50px;width: 54px;float: left; padding: 2px 2px "/>
-
         <div class="navbar-header">
             <a class="navbar-brand logo" href="home.php">DevQuery</a>
         </div>
-
-
         <form style="width:330px;float: left" action="search.php" method="get">
-        <input id="search" type="text" name="key" placeholder="Search.." style="width: 150px;height: 34px;border-radius:5px ">
+            <input id="search" type="text" name="key" placeholder="Search.." style="width: 150px;height: 34px;border-radius:5px ">
         </form>
         <ul class="nav navbar-nav" style="margin-right: 40px">
             <li>
                 <a href="profile.php" class="active" id="nav-a"><img src="img/user.ico" style="height: 35px;width: 35px;float: left; margin-right: 5px "/><?php echo $_SESSION['user_name'];?></a>
             </li>
+            <li >
+                <?php
+                $user_name = $_SESSION['user_name'];
+                $sql_temp = "select count(notification_id) as cnt from notification where user_name = '$user_name' and is_read = '0'";
+                $r_temp = $db->query($sql_temp);
+                $rs_temp = $r_temp->fetch_assoc();
+                $notf_cnt = $rs_temp['cnt'];
+                ?>
+                <a onclick="myfunction()" class="fo"  href="#" id="nav-a"><img   src="img/notify.png" style="height: 34px;width: 34px;float: left;margin-right: 5px"/> <?php echo $notf_cnt;?> </a>
+                <div class="nf">
+                    <div class="nn">
 
-            <li>
-                <a href="#" id="nav-a"><img src="img/notify.png" style="height: 34px;width: 34px;float: left;margin-right: 5px"/> [10] </a>
+                        <ul class="notify">
+                            <?php
+                            $user_name = $_SESSION['user_name'];
+                            $sql_temp = "select * from notification where user_name = '$user_name' ORDER BY notification.notification_id DESC";
+                            $result_temp = $db->query($sql_temp);
+                            $res_temp = $result_temp->fetch_assoc();
+                            while($res_temp){
+                                $p_id = $res_temp['post_id'];
+                                $detail = $res_temp['notification_details'];
+                                $ir = $res_temp['is_read'];
+                                $notf_id = $res_temp['notification_id'];
+
+                                $s = "select * from my_post where post_id = '$p_id' ";
+                                $r = $db->query($s);
+                                $r = $r->fetch_assoc();
+                                if($ir == 0){?>
+                                    <li><a <?php if($r){?>href="post.php?post_id=<?php echo $p_id;?>" <?php } else {?> href="post1.php?post_id=<?php echo $p_id;?>" <?php }?> onclick="return notf_update(<?php echo $notf_id;?>)"><img style="margin:6px" width="40" height="40" src="img/user.ico" alt=""><?php echo $detail;?></a></li>
+                                <?php }else{?>
+                                    <li ><a <?php if($r){?>href="post.php?post_id=<?php echo $p_id;?>" <?php } else {?> href="post1.php?post_id=<?php echo $p_id;?>" <?php }?> style="background-color: #F5F5F5;"><img style="margin:6px" width="40" height="40" src="img/user.ico" alt=""><?php echo $detail;?></a></li>
+
+                                <?php } $res_temp = $result_temp->fetch_assoc(); }?>
+
+                        </ul>
+                    </div>
+
+                </div>
+
             </li>
 
             <li>
@@ -118,12 +213,12 @@ function check_vote($post_id,$vote_direction,$user_name,$db){
             </li>
 
             <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-align-justify"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="logout.php">Logout</a></li>
-            <li><a href="#">About</a></li>
-          </ul>
-        </li>
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-align-justify"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="logout.php">Logout</a></li>
+                    <li><a href="#">About</a></li>
+                </ul>
+            </li>
         </ul>
     </div>
 </nav>
@@ -230,10 +325,10 @@ function check_vote($post_id,$vote_direction,$user_name,$db){
                                 <li>
                                     <button type="button" class="btn btn-link"><img src="img/plus.svg" style="height: 34px;width: 34px;float: left;margin-right: 5px;cursor: pointer;"/>+100</button>
 
-                                    
+
                                 </li>
                                 <li>
-                                    
+
                                 </li>
 
                                 <li>
@@ -288,8 +383,8 @@ function check_vote($post_id,$vote_direction,$user_name,$db){
                                 $result1 = $db->query($sql1);
                                 $res1 = $result1->fetch_assoc();
                                 while($res1){ ?>
-                                <span style="margin-left: 2px;color: darkblue"><b><?php echo "#".$res1['tag_name']." "?></b></span>
-                                <?php $res1 = $result1->fetch_assoc(); }?>
+                                    <span style="margin-left: 2px;color: darkblue"><b><?php echo "#".$res1['tag_name']." "?></b></span>
+                                    <?php $res1 = $result1->fetch_assoc(); }?>
                             </p>
                         </div>
 
@@ -318,18 +413,18 @@ function check_vote($post_id,$vote_direction,$user_name,$db){
                                 <li>
 
                                     <?php if(check_vote($post_id,'plus',$_SESSION['user_name'],$db)) {?>
-                                    <button type="button"  onclick="plusvote(<?php echo $post_id;?>)" class="btn btn-link" style="text-decoration: none;border: none;"><img src="img/plus.svg" style="height: 34px;width: 34px;float: left;margin-right: 5px;"/><span id="<?php echo $post_id;?>" style="color:darkblue;font-weight: bolder"><?php echo "+".$plusvote_count;?></span></button>
+                                        <button type="button"  onclick="plusvote(<?php echo $post_id;?>)" class="btn btn-link" style="text-decoration: none;border: none;"><img src="img/plus.svg" style="height: 34px;width: 34px;float: left;margin-right: 5px;"/><span id="<?php echo $post_id;?>" style="color:darkblue;font-weight: bolder"><?php echo "+".$plusvote_count;?></span></button>
                                     <?php } else { ?>
-                                    <button type="button"  onclick="plusvote(<?php echo $post_id;?>)" class="btn btn-link" style="text-decoration: none;border: none;"><img src="img/plus.svg" style="height: 34px;width: 34px;float: left;margin-right: 5px;"/><span id="<?php echo $post_id;?>" style="color:#407fe5;font-weight: normal"><?php echo "+".$plusvote_count;?></span></button>
+                                        <button type="button"  onclick="plusvote(<?php echo $post_id;?>)" class="btn btn-link" style="text-decoration: none;border: none;"><img src="img/plus.svg" style="height: 34px;width: 34px;float: left;margin-right: 5px;"/><span id="<?php echo $post_id;?>" style="color:#407fe5;font-weight: normal"><?php echo "+".$plusvote_count;?></span></button>
                                     <?php }?>
                                 </li>
                                 <li>
                                     <?php $minusid = $post_id + 200000;?>
 
                                     <?php if(check_vote($post_id,'minus',$_SESSION['user_name'],$db)) {?>
-                                    <button type="button"  onclick="minusvote(<?php echo $minusid;?>)" class="btn btn-link" style="text-decoration: none;"><img src="img/minus.svg" style="height: 33px;width: 34px;float: left;margin-right: 5px;cursor: pointer;"/><span id="<?php echo $minusid;?>" style="color:darkblue;font-weight: bolder"><?php echo "-".$minusvote_count;?></span></button>
+                                        <button type="button"  onclick="minusvote(<?php echo $minusid;?>)" class="btn btn-link" style="text-decoration: none;"><img src="img/minus.svg" style="height: 33px;width: 34px;float: left;margin-right: 5px;cursor: pointer;"/><span id="<?php echo $minusid;?>" style="color:darkblue;font-weight: bolder"><?php echo "-".$minusvote_count;?></span></button>
                                     <?php } else { ?>
-                                    <button type="button"  onclick="minusvote(<?php echo $minusid;?>)" class="btn btn-link" style="text-decoration: none;"><img src="img/minus.svg" style="height: 33px;width: 34px;float: left;margin-right: 5px;cursor: pointer;"/><span id="<?php echo $minusid;?>" style="color:#407fe5;font-weight: normal"><?php echo "-".$minusvote_count;?></span></button>
+                                        <button type="button"  onclick="minusvote(<?php echo $minusid;?>)" class="btn btn-link" style="text-decoration: none;"><img src="img/minus.svg" style="height: 33px;width: 34px;float: left;margin-right: 5px;cursor: pointer;"/><span id="<?php echo $minusid;?>" style="color:#407fe5;font-weight: normal"><?php echo "-".$minusvote_count;?></span></button>
                                     <?php } ?>
 
                                 </li>
@@ -428,29 +523,53 @@ function check_vote($post_id,$vote_direction,$user_name,$db){
 
             <div class="col-lg-12">
                 <h3>Tags</h3>
-
-
-
-
-                   <button type="button" class="btn btn-primary" style="width: 48%">PHP</button>
-                    <button type="button" class="btn btn-success" style="width: 48%">JAVA</button>
-                    <button type="button" class="btn btn-danger" style="width: 48%">SPRING</button>
-                    <button type="button" class="btn btn-warning" style="width: 48%">PYTHON</button>
-                    <button type="button" class="btn btn-info" style="width: 48%">RUBY</button>
-                    <button type="button" class="btn btn-danger" style="width: 48%">C++</button>
-
-
-
-
-
-
-
+                <button type="button" class="btn btn-primary" style="width: 48%">PHP</button>
+                <button type="button" class="btn btn-success" style="width: 48%">JAVA</button>
+                <button type="button" class="btn btn-danger" style="width: 48%">SPRING</button>
+                <button type="button" class="btn btn-warning" style="width: 48%">PYTHON</button>
+                <button type="button" class="btn btn-info" style="width: 48%">RUBY</button>
+                <button type="button" class="btn btn-danger" style="width: 48%">C++</button>
             </div>
         </div>
     </div>
 </div>
 
 <script>
+
+
+    var i = 0;
+    function myfunction(){
+        if (i%2==0) {
+            document.querySelector(".nf").style.display = "block";
+        }else{
+            document.querySelector(".nf").style.display = "none";
+        }
+        i++;
+    }
+
+    // function ok(){
+    //     document.querySelector(".nf").style.display = "none";
+    // }
+
+
+    function notf_update(id) {
+        var notfid = id;
+        $.ajax({
+            type: "POST",
+            url: "validation.php",
+            data: {
+                notfid:notfid,
+                action:"notf",
+
+            },
+            success: function(data) {
+
+
+            }
+        });
+
+    }
+
     function plusvote(id) {
 
         var postid = id;
@@ -555,6 +674,12 @@ function check_vote($post_id,$vote_direction,$user_name,$db){
 
 
     }
+
+
+
+</script>
+<script>
+
 </script>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>

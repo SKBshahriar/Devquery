@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<div class="container" style="width: 100%;height: 635px; padding-top: 100px;padding-left: 350px;background-image: url(img/2.1_in_frame.png)">
+<div class="container" style="width: 100%;height: 624px; padding-top: 100px;padding-left: 350px;background-image: url(img/2.1_in_frame.png)">
     <h2>Signup Form</h2>
     <form class="form-horizontal" onsubmit="return formvalidate()"  method="post" action="signupvalidate.php">
         <div class="form-group">

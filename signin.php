@@ -11,7 +11,7 @@
 <body>
 
  
-<div class="container" style="width: 100%;height: 635px; padding-top: 100px;padding-left: 350px;margin-top:8%;background-image: url(img/2.1_in_frame.png)">
+<div class="container" style="width: 100%;height: 624px; padding-top: 100px;padding-left: 350px;background-image: url(img/2.1_in_frame.png)">
   
   <div class="col-md-8" style="margin-left: 15%;">
       <h2 style="margin-left: 30%;margin-bottom: 5%;">Log In</h2>

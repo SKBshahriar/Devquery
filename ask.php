@@ -188,6 +188,7 @@ function uploadPhoto($p_id){
                         border: 1px solid;">Title</h3>
                 <textarea style="margin-left: 3%;
                                 border: 2px solid black;
+                                outline:none;
                                 border-radius: 5px;" name="title" id="" cols="100" rows="2"></textarea>
             </div> 
                
@@ -203,6 +204,7 @@ function uploadPhoto($p_id){
                         color: darkblue;
                         border: 1px solid;">Tags</h3>
                 <textarea style="margin-left: 3%;
+                                outline:none;
                                 border: 2px solid black;
                                 border-radius: 5px;" name="tags" id="" cols="100" rows="2"></textarea>
             </div> 
@@ -213,11 +215,24 @@ function uploadPhoto($p_id){
                 <textarea placeholder="Write your post here...."style="border: 2px solid black;
                                         font-size: 20px;
                                         margin-left: 11%;
+                                        outline:none;    
                                         border-radius: 5px;"  name="description" cols="70" rows="5"></textarea>
 
+                    <input style="margin-top: 25px;margin-left: 98px;border-radius: 6px;width: 186px;cursor: pointer;float: left;" type="file" name="photo" accept="image/*">
+                    <button type="submit"  name="ask" style="    color: white;
+                                border-radius: 6px;
+                                background-color: #72bb53;
+                                color: white;
+                                padding: 9px 20px;
+                                margin: 8px 0;
+                                border: none;
+                                float: right;
+                                cursor: pointer;
+                                width: 16%;
+                                height: 37px;">Post
+                    </button>
+                    <div style="clear:both;"></div>
                     
-                    <button type="submit"  name="ask" style="color: white;border-radius: 6px;background-color: #72bb53;color: white;padding: 9px 20px; margin: 8px 0; border: none; cursor: pointer; width: 16%; height: 37px;margin-left: 680px;">Post</button>
-                    <input style="margin-top: -41px;margin-left: 98px;border-radius: 6px;width: 186px;float:left" type="file" name="photo" accept="image/*">
 
             </div>
             </form>
